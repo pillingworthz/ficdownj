@@ -62,6 +62,9 @@ public class Story {
         private Map<String, List<Scene>> scenes = new HashMap<>();
         private Map<Integer, Action> actions = new HashMap<>();
 
+        private Scene.Builder sceneBuilder;
+        private Action.Builder actionBuilder;
+
         private Builder() {
 
         }
@@ -86,8 +89,32 @@ public class Story {
             return this;
         }
 
+        public Scene.Builder withScene() {
+            if (sceneBuilder == null) {
+                sceneBuilder = Scene.builder(this);
+            }
+            return sceneBuilder;
+        }
+
+        public Builder clearScene() {
+            sceneBuilder = null;
+            return this;
+        }
+
         public Builder action(Action action) {
             actions.put(action.getId(), action);
+            return this;
+        }
+
+        public Action.Builder withAction() {
+            if (actionBuilder == null) {
+                actionBuilder = Action.builder(this);
+            }
+            return actionBuilder;
+        }
+
+        public Builder clearAction() {
+            actionBuilder = null;
             return this;
         }
 

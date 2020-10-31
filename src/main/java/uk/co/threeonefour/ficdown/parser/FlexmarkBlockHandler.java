@@ -11,10 +11,8 @@ import uk.co.threeonefour.ficdown.model.parser.FicDownException;
 import uk.co.threeonefour.ficdown.model.story.Story;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FlexmarkBlockHandler implements BlockHandler {
@@ -25,7 +23,6 @@ public class FlexmarkBlockHandler implements BlockHandler {
     public Iterable<Block> extractBlocks(String text) {
 
         Story.Builder storyBuilder = Story.builder();
-
 
         MutableDataSet options = new MutableDataSet();
 
@@ -57,9 +54,9 @@ public class FlexmarkBlockHandler implements BlockHandler {
                 if (level == 1) {
                     storyBuilder.name(name);
                 } else if (level == 2) {
-
+                    storyBuilder.withScene().name(name).end();
                 } else if (level == 3) {
-
+                    storyBuilder.withAction().end();
                 } else {
                     /* TODO (pillingworth, 20202-10-30) an unsupported level */
                 }

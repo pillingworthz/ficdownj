@@ -1,5 +1,8 @@
 package uk.co.threeonefour.ficdown.model.story;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Action {
 
     private final int id;
@@ -9,13 +12,13 @@ public class Action {
     private final int lineNumber;
     private final boolean visited;
 
-    public Action(int id, String toggle, String rawDescription, String description, int lineNumber, boolean visited) {
-        this.id = id;
-        this.toggle = toggle;
-        this.rawDescription = rawDescription;
-        this.description = description;
-        this.lineNumber = lineNumber;
-        this.visited = visited;
+    public Action(Action.Builder b) {
+        this.id = b.id;
+        this.toggle = b.toggle;
+        this.rawDescription = b.rawDescription;
+        this.description = b.description;
+        this.lineNumber = b.lineNumber;
+        this.visited = b.visited;
     }
 
     public int getId() {
@@ -53,4 +56,66 @@ public class Action {
                 ", visited=" + visited +
                 '}';
     }
+
+    public static Action.Builder builder(Story.Builder storyBuilder) {
+        return new Action.Builder(storyBuilder);
+    }
+
+    public static class Builder {
+
+        private  int id;
+        private  String toggle;
+        private  String rawDescription;
+        private  String description;
+        private  int lineNumber;
+        private  boolean visited;
+
+        private Story.Builder storyBuilder;
+
+        private Builder(Story.Builder storyBuilder) {
+            this.storyBuilder = storyBuilder;
+        }
+
+        public Action.Builder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Action.Builder toggle(String toggle) {
+            this.toggle = toggle;
+            return this;
+        }
+
+        public Action.Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Action.Builder rawDescription(String rawDescription) {
+            this.rawDescription = rawDescription;
+            return this;
+        }
+
+        public Action.Builder lineNumber(int lineNumber) {
+            this.lineNumber = lineNumber;
+            return this;
+        }
+
+        public Action.Builder visited(boolean visited) {
+            this.visited = visited;
+            return this;
+        }
+
+        public Story.Builder end() {
+            storyBuilder.action(build()).clearAction();
+            return storyBuilder;
+        }
+
+        public Action build() {
+            return new Action(this);
+        }
+
+    }
+
+
 }
